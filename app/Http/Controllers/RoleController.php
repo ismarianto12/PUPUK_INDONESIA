@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tmlevel;
+// use App\Models\Tmlevel;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Carbon;
+use App\Models\Role;
 
 class RoleController extends Controller
 {
@@ -23,7 +24,7 @@ class RoleController extends Controller
     function __construct(Request $request)
     {
         $this->request = $request;
-        $this->view    = '.role.';
+        $this->view    = 'role.';
         $this->route   = 'master.user.';
     }
 
@@ -41,13 +42,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (!$this->request->ajax()) {
-            return redirect(route('home'));
-            exit();
-        }
+
         $title = 'Tambah Data User';
-        $level = Tmlevel::get();
-        return view($this->view . 'form_add', compact('title', 'level'));
+        $level = Role::get();
+        return view($this->view . 'form', compact('title', 'level'));
     }
 
     public function getbangunan()
@@ -58,7 +56,7 @@ class RoleController extends Controller
 
     public function api()
     {
-        $data = User::join('tmuser_level', 'user.level_id', '=', 'tmuser_level.id')->get();
+        $data = Role::get();
         return DataTables::of($data)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "' />";
@@ -66,18 +64,8 @@ class RoleController extends Controller
             ->editColumn('action', function ($p) {
                 return  '<a href="" class="btn btn-warning btn-xs" id="edit" data-id="' . $p->id . '"><i class="fa fa-edit"></i>Edit </a> ';
             }, true)
-            ->editColumn('nama', function ($p) {
-                return $p->name;
-            }, true)
-            ->editColumn('foto_p', function ($p) {
-                // return ;
-                return '<img src="' . asset('file/photo_user/' . $p->photo) . '" alt="..."
-                                                        class="avatar-img rounded-circle"
-                                                        onerror="this.onerror=null;this.src=\'' . asset('assets/img/profile.jpg') . '\';"
-                                                        id="foto">';
-            }, true)
-            ->addIndexColumn()
-            ->rawColumns(['usercreate', 'foto_p', 'action', 'id'])
+
+            ->rawColumns(['action', 'id'])
             ->toJson();
     }
     /**

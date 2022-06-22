@@ -58,7 +58,7 @@
             order: [1, 'asc'],
             pageLength: 10,
             ajax: {
-                url: "{{ route('api.user') }}",
+                url: "{{ route('api.role') }}",
                 method: 'POST',
                 _token: "{{ csrf_token() }}",
             },
@@ -98,7 +98,7 @@
                         position: 'top-end',
                         icon: 'success',
                         title: 'Data berhasil di hapus',
-                        showConfirmButton: false,
+                        // showConfirmButton: false,
                         timer: 1500
                     });
                 }, "JSON").fail(function(data) {

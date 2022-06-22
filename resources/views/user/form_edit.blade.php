@@ -1,9 +1,15 @@
+<div class="ket"></div>
 <form class="simpan form-horizontal" method="POST" action="">
 
 
     <label class="col-md-2">Fulll Name</label>
     <div class="col-md-4">
         <input name="fullname" value="{{ $fullname }}" class="form-control" type="text" />
+    </div>
+
+    <label class="col-md-2">User Name</label>
+    <div class="col-md-4">
+        <input name="fullname" value="{{ $username }}" class="form-control" type="text" />
     </div>
     <label class="col-md-2">Email</label>
     <div class="col-md-4">
@@ -65,16 +71,10 @@
                     $.each(respon.errors, function(index, value) {
                         err += "<li>" + value + "</li>";
                     });
-                    //  $('.ket').html(
-                    //      "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Perahtian donk!</strong> " +
-                    //      respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: err
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    $('.ket').html(
+                        "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Perahtian donk!</strong> " +
+                        respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+
 
                 }
             })
