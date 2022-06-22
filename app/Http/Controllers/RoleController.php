@@ -77,7 +77,7 @@ class RoleController extends Controller
     public function store()
     {
         $this->request->validate([
-            'rolename' => 'required|unique:roles,rolename',
+            'rolename' => 'required|unique:role,rolename',
 
         ]);
         try {
@@ -144,41 +144,18 @@ class RoleController extends Controller
      */
     public function update($id)
     {
-        // $this->request->validate([
-        //     // 'username' => 'required|unique:users,username',
-        //     'password' => 'required',
-        //     'email' => 'required|unique:user,email',
-        //     'tmlevel_id' => 'required',
-        //     'tmproyek_id' => 'required'
-        // ]);
+        $this->request->validate([
+            'rolename' => 'required|unique:role,rolename',
+
+        ]);
         try {
-            dd($this->request->file('foto'));
-            $data = User::find($id);
-            // $data->username = $this->request->username;
-
-            $id = Auth::user()->id;
-            $tgl = Carbon::now()->format('y-m-d');
-            $ext = $this->request->file('foto');
-            $setname = rand(122, 333) . '-' . $tgl . '.' . $ext->getClientOriginalExtension();
-
-            $ext->move('./file/photo_user/', $setname);
-            $data = User::find($id);
-            $filename = public_path('./file/photo_user/' . $data->photo);
-            if (File::exists($filename)) {
-                File::delete($filename);
-            }
-
-            $data->password = bcrypt($this->request->password);
-            $data->email = $this->request->email;
-            $data->fullname = $this->request->fullname;
-
-            $data->tmlevel_id = $this->request->id_role;
-            $data->foto = $setname;
+            $data = Role::find($id);
+            $data->rolename = $this->request->rolename;
             $data->save();
 
             return response()->json([
                 'status' => 1,
-                'msg' => 'data user berhasil edit'
+                'msg' => 'data user berhasil dtambah'
             ]);
         } catch (User $t) {
             return response()->json([

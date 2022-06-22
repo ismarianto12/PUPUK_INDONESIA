@@ -31,7 +31,7 @@
             // alert('asa');
             $.ajax({
                 url: "{{ route('role.store') }}",
-                method: "PUT",
+                method: "POST",
                 data: $(this).serialize(),
                 chace: false,
                 async: false,
