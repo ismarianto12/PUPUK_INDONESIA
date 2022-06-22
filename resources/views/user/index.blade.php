@@ -147,9 +147,9 @@
                         $.each(respon.errors, function(index, value) {
                             err += "<li>" + value + "</li>";
                         });
-                        //  $('.ket').html(
-                        //      "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Perahtian donk!</strong> " +
-                        //      respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                         $('.ket').html(
+                             "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Perahtian donk!</strong> " +
+                             respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
 
 
 

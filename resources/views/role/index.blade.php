@@ -48,7 +48,7 @@
         </div>
     </div>
 
-     <script>
+    <script>
         // table data
         var table = $('#datatable').DataTable({
             processing: true,
@@ -135,15 +135,45 @@
                 $('#form_content').html('<center><h3>Loading ...</h3></center>').load(addUrl);
             });
 
-            // edit
-            $('#datatable').on('click', '#edit', function(e) {
+            $('#datatable').on('click', '#delete', function(e) {
                 e.preventDefault();
-                $('#formmodal').modal('show');
                 id = $(this).data('id');
                 addUrl =
-                    '{{ route('role.edit', ':id') }}'
+                    '{{ route('role.destroy', ':id') }}'
                     .replace(':id', id);
-                $('#form_content').html('<center><h3>Loading Edit Data ...</h3></center>').load(addUrl);
+                $.ajax({
+                    url: addUrl,
+                    method: "DELETE",
+                    data: $(this).serialize(),
+                    chace: false,
+                    async: false,
+                    success: function(data) {
+                        $('#datatable').DataTable().ajax.reload();
+                        $('#formmodal').modal('hide');
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data berhasil di hapus',
+                            // showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function(data) {
+                        var div = $('#container');
+                        setInterval(function() {
+                            var pos = div.scrollTop();
+                            div.scrollTop(pos + 2);
+                        }, 10)
+                        err = '';
+                        respon = data.responseJSON;
+                        $.each(respon.errors, function(index, value) {
+                            err += "<li>" + value + "</li>";
+                        });
+                        $('.ket').html(
+                            "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Perahtian donk!</strong> " +
+                            respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                     }
+                });
 
             })
         });

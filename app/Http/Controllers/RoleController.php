@@ -62,7 +62,7 @@ class RoleController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "' />";
             })
             ->editColumn('action', function ($p) {
-                return  '<a href="" class="btn btn-warning btn-xs" id="edit" data-id="' . $p->id . '"><i class="fa fa-edit"></i>Edit </a> ';
+                return  '<a href="" class="btn btn-warning btn-sm" id="edit" data-id="' . $p->id . '">Edit </a><a href="" class="btn btn-danger btn-sm" id="delete" data-id="' . $p->id . '"><i class="fa fa-delete"></i>Delete </a> ';
             }, true)
 
             ->rawColumns(['action', 'id'])
@@ -174,29 +174,14 @@ class RoleController extends Controller
     public function destroy($id)
     {
         try {
-            if (is_array($this->request->id)) {
-                $datas =  user::whereIn('id', $this->request->id);
-                foreach ($datas as $data) {
-                    $tgl = Carbon::now()->format('y-m-d');
-                    $ext = $this->request->file('foto');
-                    $setname = rand(122, 333) . '-' . $tgl . '.' . $ext->getClientOriginalExtension();
 
-                    $ext->move('./file/photo_user/', $setname);
-                    $data = User::find($id);
-                    $filename = public_path('./file/photo_user/' . $data->photo);
-                    if (File::exists($filename)) {
-                        File::delete($filename);
-                    }
-                }
-                $data->delete();
-            } else {
-                user::whereid($this->request->id)->delete();
-            }
+            $data = Role::find($id);
+            $data->delete();
             return response()->json([
                 'status' => 1,
                 'msg' => 'Data berhasil di hapus'
             ]);
-        } catch (user $t) {
+        } catch (Role $t) {
             return response()->json([
                 'status' => 2,
                 'msg' => $t
