@@ -52,7 +52,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('sb') }}/vendor/datatables/jquery.dataTables.min.js"></script>
     <script>
         // table data
         var table = $('#datatable').DataTable({
