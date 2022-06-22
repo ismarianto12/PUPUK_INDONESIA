@@ -142,7 +142,7 @@
                 $('#formmodal').modal('show');
                 id = $(this).data('id');
                 addUrl =
-                    '{{ route('role.edit', ': id ') }}'
+                    '{{ route('role.edit', ':id') }}'
                     .replace(':id', id);
                 $('#form_content').html('<center><h3>Loading Edit Data ...</h3></center>').load(addUrl);
 

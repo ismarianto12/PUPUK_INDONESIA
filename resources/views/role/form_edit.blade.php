@@ -4,7 +4,7 @@
 
     <label class="col-md-2">Rolle Name</label>
     <div class="col-md-4">
-        <input name="rolename" value="" class="form-control" type="text" />
+        <input name="rolename" value="{{ $rolename }}" class="form-control" type="text" />
     </div>
 
 
@@ -28,9 +28,8 @@
     $(function() {
         $('.simpan').on('submit', function(e) {
             e.preventDefault();
-            // alert('asa');
             $.ajax({
-                url: "{{ route('role.store') }}",
+                url: "{{ route('role.update', $id) }}",
                 method: "PUT",
                 data: $(this).serialize(),
                 chace: false,

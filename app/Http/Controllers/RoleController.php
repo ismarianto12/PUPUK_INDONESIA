@@ -77,108 +77,18 @@ class RoleController extends Controller
     public function store()
     {
         $this->request->validate([
-            'username' => 'required|unique:users,username',
-            'password' => 'required',
-            'email' => 'required|unique:users,email',
-            'tmlevel_id' => 'required',
-            'foto' => 'mimes:png,jpg'
+            'rolename' => 'required|unique:roles,rolename',
+
         ]);
         try {
-            $data = new User;
+            $data = new Role;
 
-            // $id = Auth::user()->id;
-            $tgl = Carbon::now()->format('y-m-d');
-            $ext = $this->request->file('foto');
-            if ($ext == '') {
-            } else {
-                $setname = rand(122, 333) . '-' . $tgl . '.' . $ext->getClientOriginalExtension();
-                $ext->move('./file/photo_user/', $setname);
-                $data->photo  = $setname;
-            }
-            $data->username = $this->request->username;
-            $data->password = bcrypt($this->request->password);
-            $data->email = $this->request->email;
-            $data->fullname = $this->request->fullname;
-
-            $data->tmlevel_id = $this->request->id_role;
+            $data->rolename = $this->request->rolename;
             $data->save();
 
             return response()->json([
                 'status' => 1,
                 'msg' => 'data user berhasil dtambah'
-            ]);
-        } catch (User $t) {
-            return response()->json([
-                'status' => 1,
-                'msg' =>  $t,
-            ]);
-        }
-    }
-    public function profile()
-    {
-        //
-        $id = Auth::user()->id;
-
-        $data = User::findOrfail($id);
-        $name = $data->name;
-        $username = $data->username;
-        $email = $data->email;
-        $id_lev = $data->tmlevel_id;
-        $password = $data->password;
-        $id = $data->id;
-        $level = Tmlevel::get();
-        $tmlevel_id = $data->tmlevel_id;
-        $photo = $data->photo;
-
-        $title = "Edit Password";
-        return view($this->view . 'profil', compact(
-            'id',
-            'title',
-            'name',
-            'username',
-            'email',
-            'level',
-            'password',
-            'tmlevel_id',
-            'photo',
-            'id_lev'
-        ));
-    }
-
-
-    public function profilesave()
-    {
-        $this->request->validate([
-            'password' => 'required',
-            'email' => 'required|unique:users,email',
-            'foto' => 'mimes:png,jpg',
-
-        ]);
-
-        // dd($this->request->file('foto')->getClientOriginalExtension());
-        try {
-            $id = Auth::user()->id;
-            $tgl = Carbon::now()->format('y-m-d');
-            $ext = $this->request->file('foto');
-            $setname = rand(122, 333) . '-' . $tgl . '.' . $ext->getClientOriginalExtension();
-
-            $ext->move('./file/photo_user/', $setname);
-            $data = User::find($id);
-            $filename = public_path('./file/photo_user/' . $data->photo);
-            if (File::exists($filename)) {
-                File::delete($filename);
-            }
-            // $data->username = $this->request->username;
-            $data->password = bcrypt($this->request->password);
-            $data->email = $this->request->email;
-            $data->fullname = $this->request->fullname;
-
-            $data->photo = $setname;
-            $data->save();
-
-            return response()->json([
-                'status' => 1,
-                'msg' => 'data user berhasil edit'
             ]);
         } catch (User $t) {
             return response()->json([
@@ -208,34 +118,20 @@ class RoleController extends Controller
     public function edit($id)
     {
 
-        if (!$this->request->ajax()) {
-            return response()->json([
-                'data' => 'data null',
-                'aspx' => 'response aspx fail '
-            ]);
-        }
+        // if (!$this->request->ajax()) {
+        //     return response()->json([
+        //         'data' => 'data null',
+        //         'aspx' => 'response aspx fail '
+        //     ]);
+        // }
         //
-        $data = User::findOrfail($id);
-        $name = $data->name;
-        $username = $data->username;
-        $tmproyek_id = $data->tmproyek_id;
-        $email = $data->email;
-        $id_lev = $data->tmlevel_id;
-        $password = $data->password;
-        $id = $data->id;
-        $level = Tmlevel::get();
+        $data = Role::findOrfail($id);
+        $id  = $id;
+        $rolename = $data->rolename;
 
-        $tmlevel_id = $data->tmlevel_id;
         return view($this->view . 'form_edit', compact(
             'id',
-            'name',
-            'username',
-            'tmproyek_id',
-            'email',
-            'level',
-            'password',
-            'tmlevel_id',
-            'id_lev'
+            'rolename'
         ));
     }
 
