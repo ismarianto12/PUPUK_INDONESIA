@@ -20,15 +20,16 @@
         <input name="password" class="form-control" type="password" />
     </div>
     <label class="col-md-2">Role </label>
-    <div class="col-md-4">
-        <input name="role_id" class="form-control" type="text" />
-    </div>
 
     <div class="col-md-4">
-        {{-- <input name="role_id" class="form-control" type="text" /> --}}
+        <select name="role_id" class="form-control">
+            @foreach ($role as $role)
+                <option value="{{ $role->id }}"> {{ $role->rolename }}</option>
+            @endforeach
+        </select>
     </div>
 
-
+    <hr />
     <div class="card-action">
         <div class="row">
             <div class="col-md-12">

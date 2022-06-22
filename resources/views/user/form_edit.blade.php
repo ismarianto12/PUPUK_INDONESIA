@@ -9,7 +9,7 @@
 
     <label class="col-md-2">User Name</label>
     <div class="col-md-4">
-        <input name="fullname" value="{{ $username }}" class="form-control" type="text" />
+        <input name="username" value="{{ $username }}" class="form-control" type="text" />
     </div>
     <label class="col-md-2">Email</label>
     <div class="col-md-4">
@@ -21,8 +21,13 @@
     </div>
     <label class="col-md-2">Role </label>
     <div class="col-md-4">
-        <input name="role_id" class="form-control" type="text" />
+        <select name="role_id" class="form-control">
+            @foreach ($role as $role)
+                <option value="{{ $role->id }}"> {{ $role->rolename }}</option>
+            @endforeach
+        </select>
     </div>
+    <hr />
 
 
     <div class="card-action">

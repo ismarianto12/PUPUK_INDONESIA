@@ -47,8 +47,8 @@ class UserController extends Controller
             exit();
         }
         $title = 'Tambah Data User';
-        $level = Role::get();
-        return view($this->view . 'form', compact('title', 'level'));
+        $role = Role::get();
+        return view($this->view . 'form', compact('title', 'role'));
     }
 
     public function getbangunan()
@@ -147,7 +147,7 @@ class UserController extends Controller
         }
         //
         $data = User::findOrfail($id);
-        $level = Role::get();
+        $role = Role::get();
 
         $fullname = $data->fullname;
         $email = $data->email;
@@ -163,6 +163,7 @@ class UserController extends Controller
         return view($this->view . 'form_edit', compact(
             'id',
             'fullname',
+            'role',
             'email',
             'email_verified_at',
             'password',
